@@ -1,4 +1,3 @@
-<<<<<<< Updated upstream
 Gamified Focus System
 
 Team members:
@@ -16,10 +15,3 @@ The problem addressed by this project is phone distraction, particularly among s
 
 ARCHITECTURE
 https://github.com/Isra-07/Gamified-focus-system/blob/main/ARCHITECTURE.md
-
-
-=======
-jnEDKLJANlsc
->>>>>>> Stashed changes
-
-aisjdoi
