@@ -4,7 +4,7 @@ The Gamified Focus System is an Android mobile application designed to help stud
 The project focuses on core features such as focus timer management, distraction detection using Android's UsageStatsManager, a points and leveling system, a virtual home that evolves as the user progresses, a gamified challenge system, and weekly analytics reports.
 Advanced features such as social multiplayer, cloud sync across devices, in-app purchases, and real-time collaboration are outside the scope of this project. The goal is to keep the system focused, maintainable, and well-structured for an academic software engineering project.
 
-2.References
+2.References      
 
 https://www.cs.ubc.ca/~gregor/teaching/papers/4+1view-architecture.pdf
 https://en.wikipedia.org/wiki/4%2B1_architectural_view_model
