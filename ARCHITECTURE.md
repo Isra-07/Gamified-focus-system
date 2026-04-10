@@ -28,7 +28,7 @@ This approach keeps the system organized, testable, and easy to extend with new 
 
 4.Architectural Goals and Constraints
 Goals
-
+   
 Provide a clean and intuitive focus timer experience
 Motivate students through gamification (points, levels, challenges, virtual home)
 Accurately track distracting app usage during sessions
