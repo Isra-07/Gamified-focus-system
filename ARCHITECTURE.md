@@ -133,7 +133,7 @@ classDiagram
     +getCurrentLevel() Level
     +getProgressToNextLevel() Float
   }
-
+   
   class Challenge {
     -String challengeId
     -String title
