@@ -1,0 +1,112 @@
+Scenarios
+Scenario 1 — Complete Focus Session, Earn Points, and Level Up
+The student starts a 25-minute focus timer. The TimerController creates a FocusSession and begins ticking every second, emitting the countdown via StateFlow to the UI. When the timer reaches zero, FocusSession.end(completed=true) is called. PointsManager calculates points = (25 * 10) * bonusMultiplier(1.2) = 300. User.addPoints(300) brings totalPoints to 1250, which triggers a level-up check. VirtualHome.loadLayout(Level2) is called and the session is saved to SessionRepository. The UI displays "+300 points! Level 2 Unlocked!".
+This validates: TimerController, FocusSession, PointsManager, User, VirtualHome, MVVM state flow, IO thread save
+
+Scenario 2 — Distraction Detected During Session
+The student starts a focus session and switches to Instagram. Every minute, TimerController queries UsageStatsManager.getCurrentForegroundApp(), which returns "com.instagram.android". A DistractionEvent is created and passed to FocusSession.recordDistraction(), incrementing distractionCount. The event is saved to SessionRepository asynchronously so the timer is not interrupted. TimerScreen.showWarning("Stay focused!") is called and the student sees a banner. When the session ends, completionRate = 0.75 due to distractions, and the result is displayed.
+This validates: distraction detection loop, DistractionEvent, async repository save, UI warning, completion rate calculation
+
+Scenario 3 — App Killed Mid-Session (Crash Recovery)
+The student has a focus session running with 10 minutes left. Android kills the process due to low memory. The app had previously saved remainingSeconds=600, isRunning=true, and sessionId to SharedPreferences. When the student reopens the app, TimerViewModel.checkForIncompleteSession() finds a session with isCompleted=false in SessionRepository and shows a resume dialog. If the student taps Resume, resumeTimer(remainingSeconds=600) restores the session and the timer continues from 10:00. If the student taps Discard, FocusSession.markAsAbandoned() is called and a new session can begin.
+This validates: SharedPreferences crash recovery, SessionRepository query, TimerController resume, FocusSession state
+
+Scenario 4 — Level Up and Unlock Home Items
+After earning enough points, Level.isUnlocked(1250) checks requiredPoints=1000 and returns true. User.levelUp() calls getNextLevel(1) returning Level 2. VirtualHome.loadLayout(Level2) updates activeLayoutId to "home_level2". getUnlockedItemsForLevel(2) returns [Tree, Fountain] and adds them to unlockedItems. A levelUpEvent is emitted to the UI, which calls showLevelUpAnimation() and renderNewItems([Tree, Fountain]). The student sees "Level 2! New items unlocked!" and can place items in the home.
+This validates: User, Level, VirtualHome, HomeLayout, HomeItem, UI event emission, MVVM event flow
+
+Scenario 5 — Challenge Progress and Completion
+When a session completes, PointsManager.sessionCompleted(session) calls ChallengeRepository.getActiveChallenges(). For each active challenge, Challenge.updateProgress(session.duration) is called, which internally calls ChallengeEvaluator.evaluate(userId) returning progress=0.85. If progress reaches 1.0, checkCompletion() returns true, calculateChallengePoints() returns bonusPoints=500, User.addPoints(500) is called, isCompleted=true is set, and the challenge is saved. The student is notified of the 500 bonus points. If progress is below 1.0, only the progress value is saved and no points are awarded yet.
+This validates: Strategy Pattern, ChallengeEvaluator, PointsManager, ChallengeRepository, challenge loop logic
+
+Scenario 6 — Weekly Report Generation
+At Sunday 23:59, WorkManager triggers WeeklyReportWorker.doWork(). AnalyticsAggregator.generateWeeklyReport() queries AppUsageStat and FocusSession for the last 7 days in parallel. AnalyticsReport.generate() calculates: completion rate, total focus minutes, top distracting apps, average session length, and longest streak. The report is saved to Room. If the user opted in for notifications, NotificationManager.showNotification() shows "Weekly report ready". Otherwise, the report is saved silently. WorkManager.Result.success() is returned.
+This validates: WorkManager scheduling, AnalyticsAggregator, parallel queries, AnalyticsReport, NotificationManager, opt-in logic
+
+10. Size and Performance
+The Gamified Focus System is designed for individual student use on a single Android device. It is not designed for multi-user or server-scale operation.
+Expected Size
+
+Single user per device installation
+Hundreds of focus sessions stored over weeks or months
+Small reference datasets for levels, challenges, and home items
+Per-session distraction events stored locally
+
+Performance Characteristics
+
+Timer runs on Default Dispatcher — UI thread is never blocked
+Room database operations run on IO Dispatcher — no ANR risk
+Distraction event saves are asynchronous — timer accuracy is maintained
+Weekly report uses parallel queries for AppUsageStat and FocusSession
+WorkManager handles background work in a doze-safe manner
+StateFlow keeps UI reactive and updates only when state actually changes
+
+Limitations
+
+No cloud sync across devices
+No caching layer beyond Room
+No load balancing or distributed infrastructure
+Single-user, single-device assumptions
+UsageStatsManager requires explicit user permission grant
+
+These tradeoffs are acceptable for the current project scope.
+
+11. Quality
+Maintainability
+The system uses a strict MVVM layered architecture where each layer has a single clear responsibility. Adding a new screen, data type, or feature requires changes only in the relevant layer without affecting others.
+Modifiability
+New challenge types can be added by creating a new ChallengeEvaluator implementation without modifying the Challenge class or any existing evaluators. New home items and levels can be added through data alone.
+Usability
+The system provides direct flows for all core student actions:
+
+Start, pause, and resume a focus session
+View and interact with the virtual home
+Browse and track challenges
+View the analytics dashboard
+Resume an interrupted session after a crash
+
+Security
+
+All data is stored locally on the device
+No user credentials are transmitted
+Cloud export (optional) sends only anonymized data
+UsageStatsManager access requires explicit user permission
+
+Reliability
+The system uses crash recovery via SharedPreferences, structured validation in all repositories, asynchronous database writes to prevent data loss, and WorkManager for reliable background job execution that survives device restarts.
+Simplicity
+The architecture avoids unnecessary complexity such as multi-user support, cloud sync, chat systems, and external API dependencies. This keeps the system focused and appropriate for an academic software engineering project.
+
+12. Appendices
+Acronyms and Abbreviations
+
+MVVM: Model-View-ViewModel
+DAO: Data Access Object
+IPC: Inter-Process Communication
+API: Application Programming Interface
+DB: Database
+OCP: Open/Closed Principle
+UI: User Interface
+ANR: Application Not Responding
+
+Definitions
+
+Focus Session: A timed period during which the student commits to studying without distractions
+Distraction Event: A recorded instance where the student switched to a distracting app during a session
+Challenge: A goal the student works toward over multiple sessions (e.g. complete 5 sessions in a week)
+ChallengeEvaluator: A strategy class that calculates progress for a specific challenge type
+Virtual Home: A visual space that the student customizes by placing unlocked items earned through leveling up
+Level: A progression milestone unlocked when the student accumulates enough total points
+PointsManager: The component responsible for calculating how many points a session is worth
+WorkManager: Android's API for scheduling reliable background tasks that survive process death and device restarts
+
+Design Principles Applied
+
+Separation of Concerns — UI, business logic, and data are in distinct layers
+Single Responsibility Principle — each class has one clear job
+Open/Closed Principle — Challenge system is open for extension via new evaluators, closed for modification
+Strategy Pattern — ChallengeEvaluator interface allows pluggable challenge logic
+Observer Pattern — Kotlin Flow and StateFlow provide reactive, unidirectional data flow
+Repository Pattern — all data access goes through repositories; ViewModels never touch DAOs directly
+Offline-First Design — all core features work without internet access
+Low Coupling, High Cohesion — layers interact only through defined interfaces
