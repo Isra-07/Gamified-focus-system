@@ -1,0 +1,108 @@
+## 7. Development Architecture
+
+The development architecture describes how the code is organized into packages and layers. The system follows a strict top-down layered architecture where each layer only depends on the layer directly below it.
+
+### Layer Diagram
+
+```mermaid
+flowchart TB
+  subgraph UI_Layer["UI Layer - Jetpack Compose"]
+    TS["TimerScreen"]
+    HS["HomeScreen"]
+    CS["ChallengesScreen"]
+    AS["AnalyticsScreen"]
+  end
+
+  subgraph ViewModel_Layer["ViewModel Layer"]
+    TVM["TimerViewModel"]
+    HVM["HomeViewModel"]
+    CVM["ChallengesViewModel"]
+    AVM["AnalyticsViewModel"]
+  end
+
+  subgraph Repository_Layer["Repository Layer"]
+    SR["SessionRepository"]
+    UR["UserRepository"]
+    CR["ChallengeRepository"]
+    AR["AnalyticsRepository"]
+  end
+
+  subgraph Domain_Layer["Domain Layer"]
+    FS["FocusSession"]
+    U["User"]
+    L["Level"]
+    VH["VirtualHome"]
+    CH["Challenge"]
+    AUS["AppUsageStat"]
+  end
+
+  subgraph Data_Layer["Data Layer - Room"]
+    DB["AppDatabase"]
+    SDAO["SessionDAO"]
+    UDAO["UserDAO"]
+    CDAO["ChallengeDAO"]
+    ADAO["AnalyticsDAO"]
+  end
+
+  subgraph External_Services["External Services"]
+    USM["UsageStatsManager"]
+    WM["WorkManager"]
+  end
+
+  UI_Layer --> ViewModel_Layer
+  ViewModel_Layer --> Repository_Layer
+  Repository_Layer --> Domain_Layer
+  Repository_Layer --> Data_Layer
+  Repository_Layer --> External_Services
+```
+
+### Package Structure
+
+```
+com.gamifiedfocus/
+├── ui/
+│   ├── timer/           TimerScreen.kt
+│   ├── home/            HomeScreen.kt
+│   ├── challenges/      ChallengesScreen.kt
+│   └── analytics/       AnalyticsScreen.kt
+├── viewmodel/
+│   ├── TimerViewModel.kt
+│   ├── HomeViewModel.kt
+│   ├── ChallengesViewModel.kt
+│   └── AnalyticsViewModel.kt
+├── repository/
+│   ├── SessionRepository.kt
+│   ├── UserRepository.kt
+│   ├── ChallengeRepository.kt
+│   └── AnalyticsRepository.kt
+├── domain/
+│   ├── focus/
+│   │   ├── TimerController.kt
+│   │   ├── FocusSession.kt
+│   │   └── DistractionEvent.kt
+│   ├── gamification/
+│   │   ├── User.kt
+│   │   ├── Challenge.kt
+│   │   ├── ChallengeEvaluator.kt
+│   │   ├── ChallengeType.kt
+│   │   ├── Level.kt
+│   │   └── PointsManager.kt
+│   ├── home/
+│   │   ├── VirtualHome.kt
+│   │   ├── HomeLayout.kt
+│   │   └── HomeItem.kt
+│   └── analytics/
+│       ├── AppUsageStat.kt
+│       ├── AnalyticsReport.kt
+│       └── AnalyticsAggregator.kt
+├── data/
+│   ├── AppDatabase.kt
+│   ├── SessionDAO.kt
+│   ├── UserDAO.kt
+│   ├── ChallengeDAO.kt
+│   └── AnalyticsDAO.kt
+└── worker/
+    └── WeeklyReportWorker.kt
+```
+
+---
