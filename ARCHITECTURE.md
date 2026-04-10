@@ -1,8 +1,10 @@
-The Physical View describes the mapping of software components onto hardware nodes and the communication protocols between them. For the Gamified Focus System, the architecture follows a Client-Server model distributed across mobile devices and cloud infrastructure.
+ 4.2 The Physical View describes the mapping of software components onto hardware nodes and the communication protocols between them. For the Gamified Focus System, the architecture follows a Client-Server model distributed across mobile devices and cloud infrastructure.
 
 4.2.1 Deployment Diagram
 
 The following diagram illustrates the distribution of the system across the physical nodes, highlighting the local persistence on the device and the optional cloud export.
+
+
 
 ### 4.2.1 Deployment Diagram
 
@@ -19,9 +21,8 @@ graph TD
         D[(Cloud Database)]
         C <-->|Data Management| D
     end
-24    A -.->|HTTPS / JSON Export| C
-25
-26    ```
+
+    A -.->|HTTPS / JSON Export| C
 27
 
 28    4.2.2 Hardware and Node Descriptions
