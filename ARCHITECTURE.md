@@ -116,13 +116,13 @@ This document follows the **4+1 architectural view model** to describe the syste
 from five complementary perspectives. Each view addresses a different set of 
 concerns and audience:
 
-| View | What it answers | Diagrams Used | Section |
+| View | What it answers | Diagrams | Section |
 |---|---|---|---|
-| **Logical View** | What are the main classes and how do they relate? | Class diagram, Strategy pattern diagram | Section 5 |
-| **Process View** | How does the system behave at runtime? | State diagram, Activity diagrams, Concurrency diagram | Section 6 |
-| **Development View** | How is the code organized? | Layer diagram, Package diagram | Section 7 |
-| **Physical View** | Where does the system run? | Deployment diagram, System architecture diagram | Section 8 |
-| **Scenarios (+1)** | How do the views work together in real use cases? | Sequence diagrams for all 6 key scenarios | Section 9 |
+| **Logical View** | Classes and their relationships | Class diagram, Strategy pattern | 5 |
+| **Process View** | Runtime behavior | State, Activity diagrams | 6 |
+| **Development View** | Code organization | Layer, Package diagrams | 7 |
+| **Physical View** | Deployment environment | Deployment diagram | 8 |
+| **Scenarios (+1)** | Real use cases | Sequence diagrams | 9 |
 
 ## 4. Architectural Goals & Constraints
 *(Israa - section in progress)*
