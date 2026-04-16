@@ -77,25 +77,6 @@ the **MVVM pattern** with clean architecture principles. This section provides
 an overview of architectural constraints, technology choices, and the 4+1 
 views documented in Sections 5–9.
 
-### Architectural Overview
-
-The architecture was designed around three core constraints specific to this system:
-
-- **Offline-first**: All core features (timer, points, challenges, and analytics) 
-  work without internet. Room provides local SQLite persistence so no network 
-  call is ever required during a focus session. The only optional network 
-  interaction is the analytics export to a cloud server, which requires 
-  the user to explicitly opt in.
-
-- **Thread safety**: The focus timer runs on the Default Dispatcher (background 
-  thread) and emits countdown ticks via `Flow<Int>` to `TimerViewModel`. Database 
-  writes go through the IO Dispatcher. The UI thread is never blocked, preventing 
-  ANR errors during long sessions.
-
-- **Extensibility via Strategy Pattern**: The challenge system uses a 
-  `ChallengeEvaluator` interface so new challenge types (e.g., 
-  `EarlyMorningEvaluator`) can be added without modifying the existing `Challenge` 
-  class, satisfying the Open/Closed Principle.
 
 ### Technology Stack
 
@@ -125,7 +106,20 @@ concerns and audience:
 | **Scenarios (+1)** | Real use cases | Sequence diagrams | 9 |
 
 ## 4. Architectural Goals & Constraints
-*(Israa - section in progress)*
+
+The architecture was designed around three core constraints specific to this system:
+
+### 1. Offline-first
+
+All core features (timer, points, challenges, and analytics) work without internet. Room provides local SQLite persistence so no network call is ever required during a focus session. The only optional network interaction is the analytics export to a cloud server, which requires the user to explicitly opt in.
+
+### 2. Thread Safety
+
+The focus timer runs on the Default Dispatcher (background thread) and emits countdown ticks via `Flow<Int>` to `TimerViewModel`. Database writes go through the IO Dispatcher. The UI thread is never blocked, preventing ANR errors during long sessions.
+
+### 3. Extensibility via Strategy Pattern
+
+The challenge system uses a `ChallengeEvaluator` interface so new challenge types (e.g., `EarlyMorningEvaluator`) can be added without modifying the existing `Challenge` class, satisfying the Open/Closed Principle.
 
 ## 5. Logical Architecture
 *(Israa - section in progress)*
