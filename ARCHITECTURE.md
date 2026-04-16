@@ -2,9 +2,12 @@
 
 ## Change History
 
+## Change History
+
 | Version | Date | Author | Description |
 |---|---|---|---|
-| 1.0 | [Date] | Israa | Initial architecture template |
+| 1.0 | 16/04/2026 | Israa | Initial architecture template |
+| 1.1 | 16/04/2026 | Israa | Add Scope section |
 
 ## Table of Contents
 
