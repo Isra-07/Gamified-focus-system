@@ -2,8 +2,6 @@
 
 ## Change History
 
-## Change History
-
 | Version | Date | Author | Description |
 |---|---|---|---|
 | 1.0 | 16/04/2026 | Israa | Initial architecture template |
@@ -74,41 +72,57 @@ The goal is to keep the system focused, maintainable, and well-structured for an
 
 ## 3. Software Architecture
 
-The Gamified Focus System follows a **clean MVVM (Model-View-ViewModel)** layered architecture, documented using the **4+1 View Model** approach.
+The architecture follows the **4+1 View Model**, and implements 
+the **MVVM pattern** with clean architecture principles. This section provides 
+an overview of architectural constraints, technology choices, and the 4+1 
+views documented in Sections 5–9.
 
 ### Architectural Overview
 
-The system is designed to be:
-- **Maintainable**: Clear separation of concerns between UI, logic, and data
-- **Testable**: Each layer can be tested independently with mock data
-- **Extensible**: New features (e.g., social multiplayer) can be added without breaking existing code
+The architecture was designed around three core constraints specific to this system:
+
+- **Offline-first**: All core features (timer, points, challenges, and analytics) 
+  work without internet. Room provides local SQLite persistence so no network 
+  call is ever required during a focus session. The only optional network 
+  interaction is the analytics export to a cloud server, which requires 
+  the user to explicitly opt in.
+
+- **Thread safety**: The focus timer runs on the Default Dispatcher (background 
+  thread) and emits countdown ticks via `Flow<Int>` to `TimerViewModel`. Database 
+  writes go through the IO Dispatcher. The UI thread is never blocked, preventing 
+  ANR errors during long sessions.
+
+- **Extensibility via Strategy Pattern**: The challenge system uses a 
+  `ChallengeEvaluator` interface so new challenge types (e.g., 
+  `EarlyMorningEvaluator`) can be added without modifying the existing `Challenge` 
+  class, satisfying the Open/Closed Principle.
 
 ### Technology Stack
 
-| Component | Technology | Purpose |
+| Component | Technology | Reason |
 |---|---|---|
-| Programming Language | Kotlin | Modern Android development |
-| UI Framework | Jetpack Compose | Declarative UI |
-| Architecture Pattern | MVVM + Repository | Separation of concerns |
-| Local Database | Room | Type-safe SQLite |
-| Background Processing | WorkManager | Reliable background jobs |
-| Distraction Detection | UsageStatsManager | Track foreground apps |
-| Dependency Injection | Dagger Hilt | Reduce boilerplate |
-| Version Control | Git + GitHub | Team collaboration |
+| Language | Kotlin | First-class Android support, coroutines for async |
+| UI Framework | Jetpack Compose | Declarative UI, direct StateFlow integration |
+| Architecture Pattern | MVVM + Repository | Separates UI state from business logic and data |
+| Local Database | Room | Type-safe SQLite with DAO abstraction over raw queries |
+| Background Jobs | WorkManager | Survives process death and device restarts unlike AlarmManager |
+| Distraction Detection | UsageStatsManager | Only Android API that provides foreground app data |
+| Async | Kotlin Coroutines + Flow | Structured concurrency, reactive UI updates |
+| Version Control | Git + GitHub | Team collaboration and documentation hosting |
 
 ### 4+1 View Model Documentation
 
-This document follows the **4+1 architectural view model** (Kruchten, 1995) to provide a complete understanding of the system:
+This document follows the **4+1 architectural view model** to describe the system 
+from five complementary perspectives. Each view addresses a different set of 
+concerns and audience:
 
-| View | Description | Section |
-|---|---|---|
-| **Logical View** | System components and their relationships (MVVM layers) | Section 5 |
-| **Process View** | Runtime processes (focus timer, background jobs, distraction detection) | Section 6 |
-| **Development View** | Code organization (packages, modules, file structure) | Section 7 |
-| **Physical View** | Deployment on Android device + local storage | Section 8 |
-| **Scenarios** | User interaction examples (focus session, distraction, analytics) | Section 9 |
-
-
+| View | What it answers | Diagrams Used | Section |
+|---|---|---|---|
+| **Logical View** | What are the main classes and how do they relate? | Class diagram, Strategy pattern diagram | Section 5 |
+| **Process View** | How does the system behave at runtime? | State diagram, Activity diagrams, Concurrency diagram | Section 6 |
+| **Development View** | How is the code organized? | Layer diagram, Package diagram | Section 7 |
+| **Physical View** | Where does the system run? | Deployment diagram, System architecture diagram | Section 8 |
+| **Scenarios (+1)** | How do the views work together in real use cases? | Sequence diagrams for all 6 key scenarios | Section 9 |
 
 ## 4. Architectural Goals & Constraints
 *(Israa - section in progress)*
