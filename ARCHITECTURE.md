@@ -467,22 +467,14 @@ The following sequence diagrams illustrate three key scenarios of the Gamified F
 ## Appendices
 
 ### Acronyms and Abbreviations
-<<<<<<< israa-architecture
-| DAO | Data Access Object |
-| UML | Unified Modeling Language |
-
-### Definitions
-| **Open/Closed Principle** | Classes should be open for extension but closed for modification |
-| **ChallengeEvaluator** | Interface defining the contract for challenge evaluation |
-| **Concrete Strategy** | Specific implementation of a Strategy interface |
-| **Delegation** | One object passing a task to another object |
-
-=======
 | Acronym | Meaning |
 |---|---|
 | UI | User Interface |
 | OS | Operating System |
 | ID | Identifier |
+| DAO | Data Access Object |
+| UML | Unified Modeling Language |
+
 
 ### Definitions
 | Term | Definition |
@@ -491,6 +483,22 @@ The following sequence diagrams illustrate three key scenarios of the Gamified F
 | **Focus Rate** | Percentage of time the user remained focused during a session |
 | **Foreground App** | The application currently visible on the user's screen |
 | **State Persistence** | Saving current state to be restored later |
->>>>>>> main
+| **Open/Closed Principle** | Classes should be open for extension but closed for modification |
+| **ChallengeEvaluator** | Interface defining the contract for challenge evaluation |
+| **Concrete Strategy** | Specific implementation of a Strategy interface |
+| **Delegation** | One object passing a task to another object |
+
 ### Design Principles
-*(Israa - section in progress)*
+
+| Principle | Description |
+|---|---|
+| **Separation of Concerns** | Each component has one clear responsibility |
+| **Dependency Inversion** | High-level modules depend on abstractions, not concrete implementations |
+| **Open/Closed Principle** | Classes are open for extension but closed for modification (Strategy Pattern) |
+| **Single Responsibility** | Each class has only one reason to change |
+| **Offline-First** | All core features work without internet (Room database) |
+| **Testability** | Each layer can be tested independently (Dagger Hilt) |
+| **Thread Safety** | UI thread is never blocked; background tasks run on appropriate dispatchers |
+| **Extensibility** | New features can be added without breaking existing code |
+| **Consistency** | Uniform naming and structure across all modules |
+| **Security & Privacy** | User data stays on device unless explicitly shared |
