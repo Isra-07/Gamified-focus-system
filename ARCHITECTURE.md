@@ -341,7 +341,7 @@ The architecture strictly enforces that dependencies point inward: Presentation 
 
 ![Layer Diagram](https://github.com/user-attachments/assets/4e18fbfa-3c32-42a3-9967-5e564d1099f8)
 
-*Figure 2: Layer Diagram (MVVM Layers) - Development*
+*Figure 4: Layer Diagram (MVVM Layers) - Development*
 
 
 ## 8. Physical Architecture
