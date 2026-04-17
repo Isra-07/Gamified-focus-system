@@ -125,7 +125,143 @@ The focus timer runs on the Default Dispatcher (background thread) and emits cou
 The challenge system uses a `ChallengeEvaluator` interface so new challenge types (e.g., `EarlyMorningEvaluator`) can be added without modifying the existing `Challenge` class, satisfying the Open/Closed Principle.
 
 ## 5. Logical Architecture
-*(Israa - section in progress)*
+The logical architecture describes the main functional components of the Gamified Focus System and how responsibilities are distributed between them. It focuses on major abstractions rather than implementation details.
+
+The system follows a **layered architecture** with clear separation between presentation, business logic, and data persistence.
+
+### Main Logical Components
+
+#### Focus Session Management
+Handles:
+- starting, pausing, resuming, and stopping focus sessions
+- tracking remaining time and session state
+- detecting session completion
+- managing session duration targets
+
+This component controls the core timing mechanism that powers the focus experience.
+
+#### Timer Controller
+Handles:
+- countdown execution
+- tick events (per time unit)
+- session completion triggers
+- running state management
+
+Acts as the orchestration engine for active focus sessions.
+
+#### Session Persistence
+Handles:
+- storing completed session records
+- tracking actual vs. target duration
+- linking sessions to users
+- generating session events for analytics
+
+Every focus session is recorded for history, reporting, and point calculation.
+
+#### Event & Usage Tracking
+Handles:
+- capturing app usage during focus sessions
+- identifying distracting applications
+- recording usage duration per app
+- timestamping all events
+- formatting dates for display
+
+This component enables distraction analysis and behavioral insights.
+
+#### Analytics & Reporting
+Handles:
+- aggregating usage statistics
+- generating weekly reports
+- calculating completion rates
+- identifying top distracting apps
+- computing average session length
+- determining longest focus streaks
+
+Reports provide users with visibility into their focus habits.
+
+#### Points & Gamification
+Handles:
+- calculating points per completed session
+- applying bonus multipliers based on streaks
+- computing challenge completion points
+- calculating weekly point totals
+- checking rank promotion eligibility
+- applying streak-based bonuses
+
+Points are the primary reward mechanism driving user engagement.
+
+#### User Progression
+Handles:
+- storing user profile and state
+- tracking total and weekly points
+- managing current rank
+- promoting and demoting ranks
+- calculating progress to next rank
+- retrieving global rank position
+
+User state evolves over time based on focus performance.
+
+#### Rank Management
+Handles:
+- defining rank tiers (Bronze, Silver, Gold, Platinum, Diamond)
+- setting minimum points per rank
+- determining promotion and demotion thresholds
+- providing rank-specific badges and colors
+- calculating progress percentage within a rank
+
+Ranks provide clear progression goals and social status.
+
+#### Level Management
+Handles:
+- defining level requirements
+- checking level unlock status
+- providing level titles and descriptions
+- calculating progress to next level
+- awarding level completion rewards
+
+Levels complement ranks with a linear, always-forward progression path.
+
+#### Leaderboard & Competition
+Handles:
+- maintaining weekly leaderboard entries
+- refreshing leaderboard data
+- retrieving top users by score
+- calculating user rank position
+- scoring weekly performance
+- promoting top performers
+
+Leaderboards drive social competition and recurring engagement.
+
+#### Persistence Layer
+Stores all structured system data using a relational database with normalized tables:
+
+- `users` — account and progression data
+- `focus_sessions` — completed session records
+- `app_usage_stats` — per-session application usage
+- `events` — raw event dispatch data
+- `leaderboard_entries` — weekly rankings
+- `rank_definitions` — rank tier configuration
+
+### Architecture Style
+
+The logical architecture supports **separation of concerns** and **reduces duplication** between components. Each component has a single, well-defined responsibility:
+
+| Component | Responsibility |
+|-----------|----------------|
+| Focus Session Management | Timing and state |
+| Session Persistence | Data storage |
+| Event Tracking | Usage capture |
+| Analytics | Insight generation |
+| Points & Gamification | Reward calculation |
+| User Progression | State management |
+| Rank/Level Management | Progression rules |
+| Leaderboard | Competition |
+
+### Class Diagram
+
+The following layered class diagram presents the main structural elements of the Gamified Focus System and the relationships between controllers, services, models, entities, and utility components. It shows how responsibilities are separated across the backend architecture and how the major system components interact. 
+![Class Diagram Overview](docs/images/class-diagram-overview.png)
+*Figure 1: Class Diagram (Overview)*
 
 ## 6. Process Architecture
 *(Madeleine - section in progress)*
