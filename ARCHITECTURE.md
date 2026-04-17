@@ -328,10 +328,14 @@ The challenge system uses the **Strategy Pattern** to evaluate different types o
 ## Appendices
 
 ### Acronyms and Abbreviations
-*(Israa - section in progress)*
+| DAO | Data Access Object |
+| UML | Unified Modeling Language |
 
 ### Definitions
-*(Israa - section in progress)*
+| **Open/Closed Principle** | Classes should be open for extension but closed for modification |
+| **ChallengeEvaluator** | Interface defining the contract for challenge evaluation |
+| **Concrete Strategy** | Specific implementation of a Strategy interface |
+| **Delegation** | One object passing a task to another object |
 
 ### Design Principles
 *(Israa - section in progress)*
