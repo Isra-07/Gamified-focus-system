@@ -1,4 +1,3 @@
-
 # Thrive – Gamified Focus System – Architecture Documentation
 
 ## Change History
@@ -10,7 +9,7 @@
 | 3.0 | 16/04/2026 | Israa | Add References section |
 | 4.0 | 16/04/2026 | Israa | Add Software Architecture section |
 | 5.0 | 16/04/2026 | Israa | Add Architectural Goals & Constraints section |
-|6.0 | 17/04/2026 | Eyis | Add Scenarios part|
+| 6.0 | 17/04/2026 | Eyis | Add Scenarios part |
 
 ## Table of Contents
 
@@ -33,6 +32,7 @@
 ---
 
 ## 1. Scope
+
 The Gamified Focus System is an Android mobile application designed to help students improve their focus and productivity through timed study sessions. The app gamifies the experience by awarding points for completing sessions, tracking distractions, allowing users to level up, and unlocking items for a customizable virtual home.
 
 ### Core Features
@@ -56,6 +56,7 @@ The following features are **outside the scope** of this project:
 
 The goal is to keep the system focused, maintainable, and well-structured for an academic software engineering project.
 
+---
 
 ## 2. References
 
@@ -72,16 +73,13 @@ The goal is to keep the system focused, maintainable, and well-structured for an
    [https://scispace.com/papers/from-game-design-elements-to-gamefulness-defining-1wnas1kptm](https://scispace.com/papers/from-game-design-elements-to-gamefulness-defining-1wnas1kptm)
 
 5. GitHub. (2024). *GitHub Flow*. Retrieved from  
-   [https://docs.github.com/en/enterprise-server@3.8/get-started/using-github/github-flow](https://docs.github.com/en/enterprise-server@3.8/get-started/using-github/github-flow) 
+   [https://docs.github.com/en/enterprise-server@3.8/get-started/using-github/github-flow](https://docs.github.com/en/enterprise-server@3.8/get-started/using-github/github-flow)
 
+---
 
 ## 3. Software Architecture
 
-The architecture follows the **4+1 View Model**, and implements 
-the **MVVM pattern** with clean architecture principles. This section provides 
-an overview of architectural constraints, technology choices, and the 4+1 
-views documented in Sections 5–9.
-
+The architecture follows the **4+1 View Model**, and implements the **MVVM pattern** with clean architecture principles. This section provides an overview of architectural constraints, technology choices, and the 4+1 views documented in Sections 5–9.
 
 ### Technology Stack
 
@@ -98,9 +96,7 @@ views documented in Sections 5–9.
 
 ### 4+1 View Model Documentation
 
-This document follows the **4+1 architectural view model** to describe the system 
-from five complementary perspectives. Each view addresses a different set of 
-concerns and audience:
+This document follows the **4+1 architectural view model** to describe the system from five complementary perspectives. Each view addresses a different set of concerns and audience:
 
 | View | What it answers | Diagrams | Section |
 |---|---|---|---|
@@ -109,6 +105,8 @@ concerns and audience:
 | **Development View** | Code organization | Layer, Package diagrams | 7 |
 | **Physical View** | Deployment environment | Deployment diagram | 8 |
 | **Scenarios (+1)** | Real use cases | Sequence diagrams | 9 |
+
+---
 
 ## 4. Architectural Goals & Constraints
 
@@ -126,7 +124,10 @@ The focus timer runs on the Default Dispatcher (background thread) and emits cou
 
 The challenge system uses a `ChallengeEvaluator` interface so new challenge types (e.g., `EarlyMorningEvaluator`) can be added without modifying the existing `Challenge` class, satisfying the Open/Closed Principle.
 
+---
+
 ## 5. Logical Architecture
+
 The logical architecture describes the main functional components of the Gamified Focus System and how responsibilities are distributed between them. It focuses on major abstractions rather than implementation details.
 
 The system follows a **layered architecture** with clear separation between presentation, business logic, and data persistence.
@@ -140,16 +141,12 @@ Handles:
 - detecting session completion
 - managing session duration targets
 
-This component controls the core timing mechanism that powers the focus experience.
-
 #### Timer Controller
 Handles:
 - countdown execution
 - tick events (per time unit)
 - session completion triggers
 - running state management
-
-Acts as the orchestration engine for active focus sessions.
 
 #### Session Persistence
 Handles:
@@ -158,8 +155,6 @@ Handles:
 - linking sessions to users
 - generating session events for analytics
 
-Every focus session is recorded for history, reporting, and point calculation.
-
 #### Event & Usage Tracking
 Handles:
 - capturing app usage during focus sessions
@@ -167,8 +162,6 @@ Handles:
 - recording usage duration per app
 - timestamping all events
 - formatting dates for display
-
-This component enables distraction analysis and behavioral insights.
 
 #### Analytics & Reporting
 Handles:
@@ -179,8 +172,6 @@ Handles:
 - computing average session length
 - determining longest focus streaks
 
-Reports provide users with visibility into their focus habits.
-
 #### Points & Gamification
 Handles:
 - calculating points per completed session
@@ -189,8 +180,6 @@ Handles:
 - calculating weekly point totals
 - checking rank promotion eligibility
 - applying streak-based bonuses
-
-Points are the primary reward mechanism driving user engagement.
 
 #### User Progression
 Handles:
@@ -201,8 +190,6 @@ Handles:
 - calculating progress to next rank
 - retrieving global rank position
 
-User state evolves over time based on focus performance.
-
 #### Rank Management
 Handles:
 - defining rank tiers (Bronze, Silver, Gold, Platinum, Diamond)
@@ -211,8 +198,6 @@ Handles:
 - providing rank-specific badges and colors
 - calculating progress percentage within a rank
 
-Ranks provide clear progression goals and social status.
-
 #### Level Management
 Handles:
 - defining level requirements
@@ -220,8 +205,6 @@ Handles:
 - providing level titles and descriptions
 - calculating progress to next level
 - awarding level completion rewards
-
-Levels complement ranks with a linear, always-forward progression path.
 
 #### Leaderboard & Competition
 Handles:
@@ -232,11 +215,8 @@ Handles:
 - scoring weekly performance
 - promoting top performers
 
-Leaderboards drive social competition and recurring engagement.
-
 #### Persistence Layer
 Stores all structured system data using a relational database with normalized tables:
-
 - `users` — account and progression data
 - `focus_sessions` — completed session records
 - `app_usage_stats` — per-session application usage
@@ -246,10 +226,8 @@ Stores all structured system data using a relational database with normalized ta
 
 ### Architecture Style
 
-The logical architecture supports **separation of concerns** and **reduces duplication** between components. Each component has a single, well-defined responsibility:
-
 | Component | Responsibility |
-|-----------|----------------|
+|---|---|
 | Focus Session Management | Timing and state |
 | Session Persistence | Data storage |
 | Event Tracking | Usage capture |
@@ -261,13 +239,11 @@ The logical architecture supports **separation of concerns** and **reduces dupli
 
 ### Class Diagram
 
-The following layered class diagram presents the main structural elements of the Gamified Focus System and the relationships between controllers, services, models, entities, and utility components. It shows how responsibilities are separated across the backend architecture and how the major system components interact. 
-<img width="2485" height="1610" alt="class-diagram-overview" src="https://github.com/user-attachments/assets/d8671d12-76b5-4f47-ac39-a479ed2190a9" /> 
-*Figure 1: Class Diagram (Overview)* 
+<img width="2485" height="1610" alt="class-diagram-overview" src="https://github.com/user-attachments/assets/d8671d12-76b5-4f47-ac39-a479ed2190a9" />
+
+*Figure 1: Class Diagram (Overview)*
 
 ### Complete Class Diagram (Detailed)
-
-The following detailed class diagram presents the complete structural view of the Gamified Focus System, including all attributes, methods, and relationships between core entities. It covers the following main components:
 
 | Component | Responsibility |
 |---|---|
@@ -278,14 +254,11 @@ The following detailed class diagram presents the complete structural view of th
 | **FocusSession** | Represents a single study session with duration, completion status, and distraction tracking |
 | **AnalyticsReport** | Aggregates usage statistics, session data, and generates weekly performance metrics |
 
-<img width="1930" height="1315" alt="Complete Session- S1" src="https://github.com/user-attachments/assets/3c53bf78-9c5c-4c3d-81ad-b1052916057f" />
-*Figure 2: Complete class diagram showing all attributes, methods, and relationships* 
+<img width="1930" height="1315" alt="Complete Class Diagram (Detailed)" src="https://github.com/user-attachments/assets/3c53bf78-9c5c-4c3d-81ad-b1052916057f" />
+
+*Figure 2: Complete class diagram showing all attributes, methods, and relationships*
 
 ### Strategy Pattern – Challenge Evaluation
-
-The challenge system uses the **Strategy Pattern** to evaluate different types of challenges. This design allows new challenge types to be added without modifying existing code, satisfying the **Open/Closed Principle**.
-
-#### Pattern Structure
 
 | Component | Role |
 |---|---|
@@ -295,68 +268,69 @@ The challenge system uses the **Strategy Pattern** to evaluate different types o
 | **ConsecutiveSessionsEvaluator** | Concrete strategy: tracks consecutive distraction-free sessions |
 | **ReduceAppUsageEvaluator** | Concrete strategy: measures reduction in distracting app usage |
 
-#### How It Works
-
+**How It Works:**
 1. Each `Challenge` contains a `ChallengeEvaluator` reference
 2. The evaluator is injected at runtime based on the challenge type
 3. `updateProgress()` delegates to the evaluator's logic
 4. New challenge types only need to implement the interface – no changes to `Challenge` class
 
 <img width="2441" height="978" alt="Strategy Pattern (ChallengeEvaluator)" src="https://github.com/user-attachments/assets/6720d755-a986-4c8c-bd6d-c455eb0ef177" />
+
 *Figure 3: Strategy Pattern implementation for Challenge Evaluation*
 
-#### Benefits
-
+**Benefits:**
 - **Extensibility** – New evaluators can be added without modifying existing code
 - **Testability** – Each evaluator can be unit-tested independently
 - **Separation of Concerns** – Challenge data is separate from evaluation logic
 
+---
+
 ## 6. Process Architecture
+
 *(Madeleine - section in progress)*
+
+---
 
 ## 7. Development Architecture
 
 ### Layered Architecture
 
-The system follows a Clean Architecture approach combined with the MVVM (Model-View-ViewModel) pattern, ensuring that dependencies point inward and inner layers remain independent of outer layers. This structure facilitates high testability and maintains a clear separation between business logic and framework-specific implementations.
+The system follows a Clean Architecture approach combined with the MVVM (Model-View-ViewModel) pattern, ensuring that dependencies point inward and inner layers remain independent of outer layers.
 
-*Why this matters for the Gamified Focus System:* This architecture ensures that the core focus mechanics, point calculations, and rank progression rules remain completely independent of the Android framework. If we ever need to migrate to a different platform or change the UI framework, the business logic, the heart of the gamification system, can be reused without modification. It also allows us to unit-test critical components like rank promotion logic and challenge evaluation without running an emulator or device.
+*Why this matters for the Gamified Focus System:* This architecture ensures that the core focus mechanics, point calculations, and rank progression rules remain completely independent of the Android framework. If we ever need to migrate to a different platform or change the UI framework, the business logic can be reused without modification.
 
 #### Presentation Layer
-The Presentation Layer contains Jetpack Compose UI components such as LeaderboardScreen, ChallengesScreen, AnalyticsScreen, and TimerScreen. These screens are responsible for rendering the user interface and observing state changes from the ViewModel. To ensure a clean separation of concerns, these components contain no business logic and focus exclusively on UI logic.
+Jetpack Compose UI components: LeaderboardScreen, ChallengesScreen, AnalyticsScreen, TimerScreen
 
 #### ViewModel Layer
-The ViewModel Layer serves as the bridge between the Presentation and Domain layers. ViewModels including TimerViewModel, LeaderboardViewModel, ChallengesViewModel, and AnalyticsViewModel expose the UI state as StateFlow objects. They delegate business logic execution to specific use cases in the Domain layer, ensuring the UI remains reactive and decoupled from the underlying processing.
+TimerViewModel, LeaderboardViewModel, ChallengesViewModel, AnalyticsViewModel – expose UI state as StateFlow
 
 #### Domain Layer
-The Domain Layer is the core of the system and contains the business logic in pure Kotlin, free from framework dependencies. It houses entities such as User, FocusSession, Challenge, and Rank. This layer also defines use cases like StartSessionUseCase, CalculatePointsUseCase, and CheckRankPromotionUseCase. By utilizing the Strategy Pattern for challenge evaluation, this layer adheres to the Open/Closed Principle, allowing new challenge types to be added without modifying existing code.
+Pure Kotlin business logic: User, FocusSession, Challenge, Rank, StartSessionUseCase, CalculatePointsUseCase
 
 #### Repository Layer
-The Repository Layer acts as a single source of truth and abstracts data sources from the business logic. Repositories such as UserRepository, SessionRepository, ChallengeRepository, AnalyticsRepository, and LeaderboardRepository are defined as interfaces within the Domain Layer. Their concrete implementations reside in the Data Layer, allowing the system to swap data sources without affecting core business rules.
+UserRepository, SessionRepository, ChallengeRepository, AnalyticsRepository, LeaderboardRepository (interfaces)
 
 #### Data Layer
-The Data Layer contains the concrete implementations of the repositories and manages data persistence. It includes Data Access Objects (DAOs) like UserDAO, SessionDAO, ChallengeDAO, LeaderboardDAO, and AnalyticsDAO. This layer uses the Room Database for local SQLite storage and manages the actual retrieval and storage of system data.
+Concrete repository implementations, DAOs (UserDAO, SessionDAO, ChallengeDAO), Room Database
 
 #### External Services
-The system integrates with several Android framework services to provide full functionality. This includes the UsageStatsManager for gathering device usage data, WorkManager for handling background tasks and periodic updates, and the NotificationManager for delivering alerts and focus reminders to the user.
+UsageStatsManager, WorkManager, NotificationManager
 
 #### Dependency Flow
-The architecture strictly enforces that dependencies point inward: Presentation → ViewModel → Domain ← Repository ← Data. Because the Domain Layer contains no knowledge of the outer layers, the core business logic remains framework-independent, highly testable, and easily maintainable.
+Presentation → ViewModel → Domain ← Repository ← Data
 
-![Layer Diagram](https://github.com/user-attachments/assets/4e18fbfa-3c32-42a3-9967-5e564d1099f8)
+<img width="2441" height="978" alt="Layer Diagram" src="https://github.com/user-attachments/assets/4e18fbfa-3c32-42a3-9967-5e564d1099f8" />
 
-*Figure 2: Layer Diagram (MVVM Layers) - Development*
+*Figure 4: Layer Diagram (MVVM Layers) - Development*
 
+---
 
 ## 8. Physical Architecture
 
 The Physical View describes the deployment configuration and the mapping of software components to the hardware environment. The system is deployed entirely on a single Android device with no external servers.
 
-### 8.1 Deployment Diagram Description
-
-The system is encapsulated within a single **Android Device** node. The execution flow is divided into three main areas: the application runtime process, the operating system services, and the local file system.
-
-#### App Process (Runtime Environment)
+### App Process (Runtime Environment)
 
 | Component | Responsibility |
 |---|---|
@@ -365,7 +339,7 @@ The system is encapsulated within a single **Android Device** node. The executio
 | **Background Workers (WorkManager)** | Executes background tasks and periodically queries app usage data |
 | **IO Dispatcher (Room)** | Handles database operations and manages read/write access |
 
-#### System Services (Android OS)
+### System Services (Android OS)
 
 | Service | Purpose |
 |---|---|
@@ -375,7 +349,7 @@ The system is encapsulated within a single **Android Device** node. The executio
 | **UsageStatsManager** | Retrieves application usage statistics |
 | **SharedPreferences** | Stores simple key-value user settings |
 
-#### File System (Storage Layer)
+### File System (Storage Layer)
 
 | Storage Type | Path | Purpose |
 |---|---|---|
@@ -383,17 +357,17 @@ The system is encapsulated within a single **Android Device** node. The executio
 | **Room Database** | `/data/data/.../focus_db` | Structured application data |
 | **Cache** | `/data/data/.../cache` | Temporary data storage |
 
-### 8.2 Deployment Diagram
+### Deployment Diagram
 
 <img width="1461" height="647" alt="physical" src="https://github.com/user-attachments/assets/a5bf93bc-4c7a-4ade-8e11-bfa96e2b9c55" />
 
+*Figure 5: Deployment Diagram*
 
+---
 
 ## 9. Scenarios
 
 The following sequence diagrams illustrate three key scenarios of the Gamified Focus System.
-
----
 
 ### Scenario 1: Complete Focus Session with Rank Promotion
 
@@ -410,7 +384,8 @@ The following sequence diagrams illustrate three key scenarios of the Gamified F
 **Validates:** focus timer management, session persistence, points calculation, rank promotion logic, leaderboard updates
 
 <img width="1930" height="1315" alt="Complete Session- S1" src="https://github.com/user-attachments/assets/91b04de4-6bcd-4815-bd02-75c090e5465f" />
-*Figure 12: Sequence diagram for successful focus session with rank promotion*
+
+*Figure 6: Sequence diagram for successful focus session with rank promotion*
 
 ---
 
@@ -420,9 +395,9 @@ The following sequence diagrams illustrate three key scenarios of the Gamified F
 
 **Flow:**
 1. TimerController starts a countdown and checks the foreground app every 5 seconds
-2. User switches to Instagram → `UsageStatsManager` detects `com.instagram.android.`
+2. User switches to Instagram → `UsageStatsManager` detects `com.instagram.android`
 3. `DistractionEvent` created and saved → distraction counter increments
-4. User receives warning: "Stay focused! You switched to Instagram."
+4. User receives warning: "Stay focused! You switched to Instagram"
 5. Timer continues; session resumes when the user returns
 6. On completion, the focus rate (75%) is displayed
 
@@ -430,7 +405,7 @@ The following sequence diagrams illustrate three key scenarios of the Gamified F
 
 <img width="1383" height="1057" alt="Distraction Detection - S2" src="https://github.com/user-attachments/assets/e8e439c2-0d79-4824-a175-13535edb8e65" />
 
-*Figure 13: Sequence diagram for distraction detection during focus session*
+*Figure 7: Sequence diagram for distraction detection during focus session*
 
 ---
 
@@ -450,9 +425,7 @@ The following sequence diagrams illustrate three key scenarios of the Gamified F
 
 <img width="1334" height="1269" alt="Crash Recovery (App Killed Mid-Session) - S3" src="https://github.com/user-attachments/assets/30fabcd5-f1da-4670-8069-16823b961de1" />
 
-*Figure 14: Sequence diagram for crash recovery and session restoration*
-
----
+*Figure 8: Sequence diagram for crash recovery and session restoration*
 
 ### Scenarios Summary
 
@@ -462,28 +435,45 @@ The following sequence diagrams illustrate three key scenarios of the Gamified F
 | Distraction Detection | User switches to Instagram | UsageStatsManager, DistractionEvent | Warning, 75% focus rate |
 | Crash Recovery | App killed by OS | SharedPreferences, SessionRepository | Session restored at 10:00 |
 
+---
+
 ## 10. Size and Performance
+
 *(Israa - section in progress)*
 
+---
+
 ## 11. Quality
+
 *(Israa - section in progress)*
+
+---
 
 ## Appendices
 
 ### Acronyms and Abbreviations
+
 | Acronym | Meaning |
 |---|---|
 | UI | User Interface |
 | OS | Operating System |
 | ID | Identifier |
+| DAO | Data Access Object |
+| UML | Unified Modeling Language |
 
 ### Definitions
+
 | Term | Definition |
 |---|---|
 | **Happy Path** | Scenario where everything works as expected with no errors |
 | **Focus Rate** | Percentage of time the user remained focused during a session |
 | **Foreground App** | The application currently visible on the user's screen |
 | **State Persistence** | Saving current state to be restored later |
-### Design Principles
-*(Israa - section in progress)*
+| **Open/Closed Principle** | Classes should be open for extension but closed for modification |
+| **ChallengeEvaluator** | Interface defining the contract for challenge evaluation |
+| **Concrete Strategy** | Specific implementation of a Strategy interface |
+| **Delegation** | One object passing a task to another object |
 
+### Design Principles
+
+*(Israa - section in progress)*
