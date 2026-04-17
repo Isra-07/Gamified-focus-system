@@ -10,6 +10,7 @@
 | 3.0 | 16/04/2026 | Israa | Add References section |
 | 4.0 | 16/04/2026 | Israa | Add Software Architecture section |
 | 5.0 | 16/04/2026 | Israa | Add Architectural Goals & Constraints section |
+|6.0 | 17/04/2026 | Eyis | Add Scenarios part|
 
 ## Table of Contents
 
