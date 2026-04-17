@@ -10,6 +10,9 @@
 | 4.0 | 16/04/2026 | Israa | Add Software Architecture section |
 | 5.0 | 16/04/2026 | Israa | Add Architectural Goals & Constraints section |
 |6.0 | 17/04/2026 | Eyis | Add Scenarios part|
+|7.0 | 17/04/2026 | Madeleine| Add process part|
+|8.0 | 17/04/2026 | Fariha| Add physical part|
+|9.0 | 17/04/2026 | Ferdos| Add development part|
 
 ## Table of Contents
 
@@ -25,11 +28,24 @@
 - [10. Size and Performance](#10-size-and-performance)
 - [11. Quality](#11-quality)
 
+
 ## List of Figures
 
-*To be completed after adding diagrams*
+| Figure | Title | section |
+|---|---|---|
+| Figure 1 | Class Diagram (Overview) | 5 |
+| Figure 2 | Complete Class Diagram (Detailed) | 5 |
+| Figure 3 | Strategy Pattern (ChallengeEvaluator) | 5 |
+| Figure 4 | State Diagram (Timer States) | 6 |
+| Figure 5 | Activity Diagram (Timer Flow) | 6 |
+| Figure 6 | Concurrency Diagram | 6 |
+| Figure 7 | Layer Diagram (MVVM Layers) - Development | 7 |
+| Figure 8 | Deployment Diagram |8|
+| Figure 9 | Sequence diagram for successful focus session with rank promotion | 9 |
+| Figure 10|  Sequence diagram for distraction detection during focus session| 9 |
+| Figure 11 | Sequence diagram for crash recovery and session restoration| 9 |
 
----
+
 
 ## 1. Scope
 The Gamified Focus System is an Android mobile application designed to help students improve their focus and productivity through timed study sessions. The app gamifies the experience by awarding points for completing sessions, tracking distractions, allowing users to level up, and unlocking items for a customizable virtual home.
@@ -316,27 +332,27 @@ The process architecture describes the dynamic behavior of the system, including
 This diagram shows the five states of a focus session including Idle, Running, and Paused. It explains how the timer transitions from counting down to either completion or being abandoned
 
 <img width="596" height="895" alt="STATE DIAGRAM" src="https://github.com/user-attachments/assets/5273dbdb-09ce-41c1-9167-ebacb22f0e97" />
-
+*Figure 4: State Diagram (Timer States)* 
 
 ### Timer Activity Diagram
 
 The Timer Activity diagram shows the background loop that checks for distractions using the UsageStatsManager every second. It illustrates how the system records distraction events and saves session data to the database
 
 <img width="1275" height="1600" alt="ACTIVITY DIAGRAM" src="https://github.com/user-attachments/assets/c8ae46c3-39f2-469c-b0da-142411cee164" />
-
+*Figure 5: Activity Diagram (Timer Flow)* 
 
 ### Weekly Report Activity Diagram
 
 The following diagram shows the automated process triggered every Sunday at 23:59 to analyze the student's productivity. It explains how the system calculates weekly focus minutes and sends a notification when the report is ready.
 
-
 <img width="741" height="1111" alt="WEEKLY REPORT ACTIVITY  DIAGRAM" src="https://github.com/user-attachments/assets/a76a8bb3-f969-49c5-9b7f-790352f824d0" />
+*Figure 6: Activity Diagram (Timer Flow)*
 
 ### Concurrency Model
 This diagram shows how the app remains responsive by distributing tasks across Main, Default, and IO threads. It explains that the UI updates on the Main thread while heavy database work happens in the background.
 
 <img width="1600" height="369" alt="CONCURRENCY DIAGRAM" src="https://github.com/user-attachments/assets/c6a9578e-4930-44aa-8aff-e9d01f966cf1" />
-
+*Figure 7:Concurrency Diagram*
 
 ---
 
@@ -371,7 +387,7 @@ The architecture strictly enforces that dependencies point inward: Presentation 
 
 ![Layer Diagram](https://github.com/user-attachments/assets/4e18fbfa-3c32-42a3-9967-5e564d1099f8)
 
-*Figure 4: Layer Diagram (MVVM Layers) - Development*
+*Figure 8: Layer Diagram (MVVM Layers) - Development*
 
 
 ## 8. Physical Architecture
@@ -412,7 +428,7 @@ The system is encapsulated within a single **Android Device** node. The executio
 ### 8.2 Deployment Diagram
 
 <img width="1461" height="647" alt="physical" src="https://github.com/user-attachments/assets/a5bf93bc-4c7a-4ade-8e11-bfa96e2b9c55" />
-
+*Figure 9: Deployment Diagram*
 
 
 ## 9. Scenarios
@@ -436,7 +452,7 @@ The following sequence diagrams illustrate three key scenarios of the Gamified F
 **Validates:** focus timer management, session persistence, points calculation, rank promotion logic, leaderboard updates
 
 <img width="1930" height="1315" alt="Complete Session- S1" src="https://github.com/user-attachments/assets/91b04de4-6bcd-4815-bd02-75c090e5465f" />
-*Figure 12: Sequence diagram for successful focus session with rank promotion*
+*Figure 10: Sequence diagram for successful focus session with rank promotion*
 
 ---
 
@@ -456,7 +472,7 @@ The following sequence diagrams illustrate three key scenarios of the Gamified F
 
 <img width="1383" height="1057" alt="Distraction Detection - S2" src="https://github.com/user-attachments/assets/e8e439c2-0d79-4824-a175-13535edb8e65" />
 
-*Figure 13: Sequence diagram for distraction detection during focus session*
+*Figure 11: Sequence diagram for distraction detection during focus session*
 
 ---
 
@@ -476,7 +492,7 @@ The following sequence diagrams illustrate three key scenarios of the Gamified F
 
 <img width="1334" height="1269" alt="Crash Recovery (App Killed Mid-Session) - S3" src="https://github.com/user-attachments/assets/30fabcd5-f1da-4670-8069-16823b961de1" />
 
-*Figure 14: Sequence diagram for crash recovery and session restoration*
+*Figure 12: Sequence diagram for crash recovery and session restoration*
 
 ---
 
