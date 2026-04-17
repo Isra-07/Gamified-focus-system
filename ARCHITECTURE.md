@@ -262,7 +262,8 @@ The logical architecture supports **separation of concerns** and **reduces dupli
 
 The following layered class diagram presents the main structural elements of the Gamified Focus System and the relationships between controllers, services, models, entities, and utility components. It shows how responsibilities are separated across the backend architecture and how the major system components interact. 
 <img width="2485" height="1610" alt="class-diagram-overview" src="https://github.com/user-attachments/assets/d8671d12-76b5-4f47-ac39-a479ed2190a9" /> 
-*Figure 1: Class Diagram (Overview)*  
+*Figure 1: Class Diagram (Overview)* 
+
 ### Complete Class Diagram (Detailed)
 The following detailed class diagram presents the complete structural view of the Gamified Focus System, including all attributes, methods, and relationships between core entities. It covers the following main components:
 
@@ -274,9 +275,6 @@ The following detailed class diagram presents the complete structural view of th
 | **TimerController** | Orchestrates focus session countdown, emits ticks, and manages session state |
 | **FocusSession** | Represents a single study session with duration, completion status, and distraction tracking |
 | **AnalyticsReport** | Aggregates usage statistics, session data, and generates weekly performance metrics |
-
-<img width="2815" height="2063" alt="Complete Class Diagram (Detailed)" src="https://github.com/user-attachments/assets/1049696d-52d5-4dea-a18f-fd9309e5469b" /> 
-*Figure 2: Complete class diagram showing all attributes, methods, and relationships*
 
 ### Strategy Pattern – Challenge Evaluation
 =======
