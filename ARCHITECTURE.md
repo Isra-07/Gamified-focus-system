@@ -323,8 +323,7 @@ The following sequence diagrams illustrate three key scenarios of the Gamified F
 
 **Validates:** focus timer management, session persistence, points calculation, rank promotion logic, leaderboard updates
 
-![Uploading Complete Session- S1.png…]()
-
+<img width="1930" height="1315" alt="Complete Session- S1" src="https://github.com/user-attachments/assets/91b04de4-6bcd-4815-bd02-75c090e5465f" />
 *Figure 12: Sequence diagram for successful focus session with rank promotion*
 
 ---
