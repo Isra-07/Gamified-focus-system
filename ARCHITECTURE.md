@@ -459,13 +459,25 @@ The following sequence diagrams illustrate three key scenarios of the Gamified F
 | Crash Recovery | App killed by OS | SharedPreferences, SessionRepository | Session restored at 10:00 |
 
 ## 10. Size and Performance
-*(Israa - section in progress)*
+
+| Metric | Target |
+|---|---|
+| APK size | ~8-12 MB |
+| Startup time | < 2 seconds |
+| Timer accuracy | ±1 second |
+| Battery usage | < 5% / hour |
+
 
 ## 11. Quality
-*(Israa - section in progress)*
+
+| Attribute | Target |
+|---|---|
+| Crash-free rate | 99.9% |
+| Unit test coverage | 80% |
+| Code review | Required for every PR |
+| Offline availability | 100% |
 
 ## Appendices
-
 ### Acronyms and Abbreviations
 | Acronym | Meaning |
 |---|---|
