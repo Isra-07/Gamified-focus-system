@@ -263,7 +263,53 @@ The logical architecture supports **separation of concerns** and **reduces dupli
 
 The following layered class diagram presents the main structural elements of the Gamified Focus System and the relationships between controllers, services, models, entities, and utility components. It shows how responsibilities are separated across the backend architecture and how the major system components interact. 
 <img width="2485" height="1610" alt="class-diagram-overview" src="https://github.com/user-attachments/assets/d8671d12-76b5-4f47-ac39-a479ed2190a9" /> 
-*Figure 1: Class Diagram (Overview)*
+*Figure 1: Class Diagram (Overview)* 
+
+### Complete Class Diagram (Detailed)
+
+The following detailed class diagram presents the complete structural view of the Gamified Focus System, including all attributes, methods, and relationships between core entities. It covers the following main components:
+
+| Component | Responsibility |
+|---|---|
+| **Level** | Defines rank tiers, requirements, and progression tracking |
+| **Leaderboard** | Manages weekly rankings, top players, and user positions |
+| **Rank** | Handles rank types (Bronze, Silver, Gold, etc.), promotion/demotion logic, and badge management |
+| **TimerController** | Orchestrates focus session countdown, emits ticks, and manages session state |
+| **FocusSession** | Represents a single study session with duration, completion status, and distraction tracking |
+| **AnalyticsReport** | Aggregates usage statistics, session data, and generates weekly performance metrics |
+
+<img width="1930" height="1315" alt="Complete Session- S1" src="https://github.com/user-attachments/assets/3c53bf78-9c5c-4c3d-81ad-b1052916057f" />
+*Figure 2: Complete class diagram showing all attributes, methods, and relationships* 
+
+### Strategy Pattern – Challenge Evaluation
+
+The challenge system uses the **Strategy Pattern** to evaluate different types of challenges. This design allows new challenge types to be added without modifying existing code, satisfying the **Open/Closed Principle**.
+
+#### Pattern Structure
+
+| Component | Role |
+|---|---|
+| **Challenge** | Context class that holds challenge data and delegates evaluation |
+| **ChallengeEvaluator** | Interface that defines the evaluation contract |
+| **SessionCounterEvaluator** | Concrete strategy: counts total focus sessions |
+| **ConsecutiveSessionsEvaluator** | Concrete strategy: tracks consecutive distraction-free sessions |
+| **ReduceAppUsageEvaluator** | Concrete strategy: measures reduction in distracting app usage |
+
+#### How It Works
+
+1. Each `Challenge` contains a `ChallengeEvaluator` reference
+2. The evaluator is injected at runtime based on the challenge type
+3. `updateProgress()` delegates to the evaluator's logic
+4. New challenge types only need to implement the interface – no changes to `Challenge` class
+
+<img width="2441" height="978" alt="Strategy Pattern (ChallengeEvaluator)" src="https://github.com/user-attachments/assets/6720d755-a986-4c8c-bd6d-c455eb0ef177" />
+*Figure 3: Strategy Pattern implementation for Challenge Evaluation*
+
+#### Benefits
+
+- **Extensibility** – New evaluators can be added without modifying existing code
+- **Testability** – Each evaluator can be unit-tested independently
+- **Separation of Concerns** – Challenge data is separate from evaluation logic
 
 ## 6. Process Architecture
 *(Madeleine - section in progress)*
