@@ -261,6 +261,7 @@ The logical architecture supports **separation of concerns** and **reduces dupli
 
 The following layered class diagram presents the main structural elements of the Gamified Focus System and the relationships between controllers, services, models, entities, and utility components. It shows how responsibilities are separated across the backend architecture and how the major system components interact. 
 ![Class Diagram Overview](docs/images/class-diagram-overview.png)
+
 *Figure 1: Class Diagram (Overview)*
 
 ## 6. Process Architecture
