@@ -396,12 +396,8 @@ The following sequence diagrams illustrate three key scenarios of the Gamified F
 | Term | Definition |
 |---|---|
 | **Happy Path** | Scenario where everything works as expected with no errors |
-| **Rank Promotion** | Moving from one rank tier to a higher tier (e.g., Bronze → Silver) |
-| **Distraction Detection** | Identifying when a user switches to a non-approved app during a focus session |
-| **Crash Recovery** | Restoring system state after unexpected termination by the OS |
 | **Focus Rate** | Percentage of time the user remained focused during a session |
 | **Foreground App** | The application currently visible on the user's screen |
-| **Incomplete Session** | A session that was started but not completed |
 | **State Persistence** | Saving current state to be restored later |
 ### Design Principles
 *(Israa - section in progress)*
