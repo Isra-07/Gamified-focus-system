@@ -276,9 +276,7 @@ The following detailed class diagram presents the complete structural view of th
 | **FocusSession** | Represents a single study session with duration, completion status, and distraction tracking |
 | **AnalyticsReport** | Aggregates usage statistics, session data, and generates weekly performance metrics |
 
-### Strategy Pattern – Challenge Evaluation
-=======
-<img width="1930" height="1315" alt="Complete Session- S1" src="https://github.com/user-attachments/assets/3c53bf78-9c5c-4c3d-81ad-b1052916057f" />
+<img width="2815" height="2063" alt="Complete Class Diagram (Detailed)" src="https://github.com/user-attachments/assets/8fa8ec63-97ff-405f-b0b5-3d9878643739" />
 *Figure 2: Complete class diagram showing all attributes, methods, and relationships* 
 
 ### Strategy Pattern – Challenge Evaluation
