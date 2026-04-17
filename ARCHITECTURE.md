@@ -309,108 +309,35 @@ The challenge system uses the **Strategy Pattern** to evaluate different types o
 
 ## 6. Process Architecture
 
-
 The process architecture describes the dynamic behavior of the system, including how it handles concurrency, background tasks, and state transitions at runtime.
 
-### Timer State Diagram
+ ### Timer State Diagram
 
-The `TimerController` moves through the following states during a session:
+<img width="596" height="895" alt="STATE DIAGRAM" src="https://github.com/user-attachments/assets/34fe6c2a-cfde-4632-a433-a8b360d91b23" /> 
 
-```mermaid
-stateDiagram-v2
-    [*] --> Idle
-    Idle --> Running : startTimer()
-    Running --> Paused : pauseTimer()
-    Paused --> Running : resumeTimer()
-    Running --> Completed : onTimerComplete()
-    Running --> Abandoned : stopTimer()
-    Paused --> Abandoned : stopTimer()
-    Completed --> [*]
-    Abandoned --> [*]
-```
-
-- **Idle** — no session is active
-- **Running** — `tick()` is called every second, emits `Flow<Int>` to the ViewModel
-- **Paused** — timer stops but `remainingSeconds` is preserved and session state is saved
-- **Completed** — timer reaches zero naturally, points are calculated and awarded
-- **Abandoned** — session stopped early by the student, no points awarded
+This diagram shows the five states of a focus session including Idle, Running, and Paused. It explains how the timer transitions from counting down to either completion or being abandoned.
 
 ### Timer Activity Diagram
 
-The following diagram shows the complete flow from when the user starts a session to when the UI is updated at the end.
+This Timer activity diagram shows the background loop that checks for distractions using the UsageStatsManager every second. It illustrates how the system records distraction events and saves session data to the database.
 
-```mermaid
-flowchart TD
-    A([User starts timer]) --> B[Launch background task - Coroutine]
-    B --> C{Timer Loop}
-    C --> D[Query UsageStatsManager]
-    D --> E[Get current foreground app]
-    E --> F{Is app approved?}
-    F -- Yes --> G[Continue timer]
-    F -- No --> H[Create DistractionEvent]
-    H --> I[Increment distractionCount]
-    I --> J[Save event to repository async]
-    J --> K[Show warning notification]
-    K --> G
-    G --> L[Decrement remainingSeconds]
-    L --> M[Emit tick via Flow]
-    M --> N{remainingSeconds > 0?}
-    N -- Yes --> C
-    N -- No --> O[onTimerComplete]
-    O --> P[Save FocusSession on IO Thread]
-    P --> Q[PointsManager.calculateSessionPoints]
-    Q --> R{Points earned?}
-    R -- Yes --> S[User.addPoints]
-    S --> T{Level up?}
-    T -- Yes --> U[VirtualHome.loadLayout new level]
-    U --> V[Show level-up animation]
-    T -- No --> W[Show points earned]
-    V --> X[Update UI on Main Thread]
-    W --> X
-    R -- No --> Y[Show session incomplete]
-    Y --> X
-    X --> Z([End])
-```
+<img width="1275" height="1600" alt="ACTIVITY DIAGRAM" src="https://github.com/user-attachments/assets/60122bb6-d32b-4b73-8703-46a5a5716096" />
+
+
 
 ### Weekly Report Activity Diagram
 
-The following diagram shows how the automated weekly analytics report is generated every Sunday at 23:59 by WorkManager.
+The following diagram shows the automated process triggered every Sunday at 23:59 to analyze the student's productivity. It explains how the system calculates weekly focus minutes and sends a notification when the report is ready.
 
-```mermaid
-flowchart TD
-    A([Sunday 23:59 - WorkManager triggers]) --> B[WeeklyReportWorker.doWork starts]
-    B --> C[AnalyticsAggregator.generateWeeklyReport]
-    C --> D{Parallel queries}
-    D --> E[Query AppUsageStat - last 7 days]
-    D --> F[Query FocusSession - last 7 days]
-    E --> G[AnalyticsReport.generate]
-    F --> G
-    G --> H[Calculate completion rate]
-    H --> I[Calculate total focus minutes]
-    I --> J[Calculate top distracting apps]
-    J --> K[Calculate average session length]
-    K --> L[Calculate longest streak]
-    L --> M[Save report to Room database]
-    M --> N{User opted in for notifications?}
-    N -- Yes --> O[NotificationManager.showNotification]
-    O --> P[User sees Weekly report ready]
-    N -- No --> Q[Report saved silently]
-    P --> R[WorkManager.Result.success]
-    Q --> R
-    R --> S([End])
-```
+<img width="741" height="1111" alt="WEEKLY REPORT ACTIVITY  DIAGRAM" src="https://github.com/user-attachments/assets/aa0683bd-0e52-4ce4-bef2-1d858c9d67af" />
 
 ### Concurrency Model
 
-The system uses Kotlin Coroutines with specific dispatchers for each type of work:
+This diagram shows how the app remains responsive by distributing tasks across Main, Default, and IO threads. It explains that the UI updates on the Main thread while heavy database work happens in the background.
 
-| Thread / Dispatcher | Responsibilities |
-|---|---|
-| **UI Thread (Main)** | Jetpack Compose screens, StateFlow collection, UI updates |
-| **Default Dispatcher** | TimerController tick every second, distraction checking |
-| **IO Dispatcher** | SessionRepository, Room DB reads and writes, AnalyticsAggregator |
-| **Background Worker** | WorkManager WeeklyReportWorker runs every Sunday at 23:59 |
-| **System Services (Binder IPC)** | UsageStatsManager queries for foreground app name |
+
+<img width="1600" height="369" alt="CONCURRENCY DIAGRAM" src="https://github.com/user-attachments/assets/117e7490-b0a1-458f-a738-3dc7108c1102" />
+
 
 ---
 
