@@ -300,8 +300,47 @@ The architecture strictly enforces that dependencies point inward: Presentation 
 
 *Figure 2: Layer Diagram (MVVM Layers) - Development*
 
+
 ## 8. Physical Architecture
-*(Fariha - section in progress)*
+
+The Physical View describes the deployment configuration and the mapping of software components to the hardware environment. The system is deployed entirely on a single Android device with no external servers.
+
+### 8.1 Deployment Diagram Description
+
+The system is encapsulated within a single **Android Device** node. The execution flow is divided into three main areas: the application runtime process, the operating system services, and the local file system.
+
+#### App Process (Runtime Environment)
+
+| Component | Responsibility |
+|---|---|
+| **UI Thread (Main)** | Manages the user interface and handles user interactions |
+| **Default Dispatcher (Coroutines)** | Handles asynchronous tasks and schedules reminders |
+| **Background Workers (WorkManager)** | Executes background tasks and periodically queries app usage data |
+| **IO Dispatcher (Room)** | Handles database operations and manages read/write access |
+
+#### System Services (Android OS)
+
+| Service | Purpose |
+|---|---|
+| **NotificationManager** | Sends notifications to the user |
+| **AlarmManager** | Schedules reminders and timed events |
+| **WorkManager** | Manages reliable background work |
+| **UsageStatsManager** | Retrieves application usage statistics |
+| **SharedPreferences** | Stores simple key-value user settings |
+
+#### File System (Storage Layer)
+
+| Storage Type | Path | Purpose |
+|---|---|---|
+| **Preferences** | `/data/data/.../prefs` | Key-value storage for user settings |
+| **Room Database** | `/data/data/.../focus_db` | Structured application data |
+| **Cache** | `/data/data/.../cache` | Temporary data storage |
+
+### 8.2 Deployment Diagram
+
+<img width="1461" height="647" alt="physical" src="https://github.com/user-attachments/assets/a5bf93bc-4c7a-4ade-8e11-bfa96e2b9c55" />
+
+
 
 ## 9. Scenarios
 *(Eyis - section in progress)*
