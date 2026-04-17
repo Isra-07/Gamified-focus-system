@@ -304,7 +304,78 @@ The architecture strictly enforces that dependencies point inward: Presentation 
 *(Fariha - section in progress)*
 
 ## 9. Scenarios
-*(Eyis - section in progress)*
+
+The following sequence diagrams illustrate three key scenarios of the Gamified Focus System.
+
+---
+
+### Scenario 1: Complete Focus Session with Rank Promotion
+
+**Description:** User completes a 25-minute focus session without distractions and earns enough points to be promoted from Bronze to Silver rank.
+
+**Flow:**
+1. User starts 25-minute timer → TimerController creates FocusSession
+2. Countdown emits remaining seconds every second to update UI
+3. On completion, session points calculated: `(25 × 10) × 1.2 = 300 points`
+4. PointsManager adds points (950 → 1250) → promotes user from Bronze to Silver
+5. UI shows rank-up animation and "+300 points!" message
+6. Leaderboard is updated with the new rank position
+
+**Validates:** focus timer management, session persistence, points calculation, rank promotion logic, leaderboard updates
+
+![Uploading Complete Session- S1.png…]()
+
+*Figure 12: Sequence diagram for successful focus session with rank promotion*
+
+---
+
+### Scenario 2: Distraction Detection
+
+**Description:** User switches to a distracting app (Instagram) during an active focus session. The system detects, records, and notifies the user.
+
+**Flow:**
+1. TimerController starts a countdown and checks the foreground app every 5 seconds
+2. User switches to Instagram → `UsageStatsManager` detects `com.instagram.android.`
+3. `DistractionEvent` created and saved → distraction counter increments
+4. User receives warning: "Stay focused! You switched to Instagram."
+5. Timer continues; session resumes when the user returns
+6. On completion, the focus rate (75%) is displayed
+
+**Validates:** distraction detection, UsageStatsManager integration, DistractionEvent persistence, user notification system
+
+<img width="1383" height="1057" alt="Distraction Detection - S2" src="https://github.com/user-attachments/assets/e8e439c2-0d79-4824-a175-13535edb8e65" />
+
+*Figure 13: Sequence diagram for distraction detection during focus session*
+
+---
+
+### Scenario 3: Crash Recovery
+
+**Description:** Android OS kills the app due to low memory while a focus session is active. The system restores the incomplete session when the user reopens the app.
+
+**Flow:**
+1. Focus session running with 10 minutes remaining → OS kills app
+2. App state saved before termination: `remainingSeconds = 600`, `isRunning = true`, session ID in SharedPreferences
+3. User reopens app → `SessionRepository` finds incomplete session
+4. Dialog displayed: "Resume previous session? (10:00 left)"
+5. User taps "Resume" → `TimerController.resumeSession()` restores timer from 10:00
+6. If the user taps "Discard," the session is marked as abandoned, and a new session starts
+
+**Validates:** state persistence, SharedPreferences usage, crash recovery mechanism, session restoration flow
+
+<img width="1334" height="1269" alt="Crash Recovery (App Killed Mid-Session) - S3" src="https://github.com/user-attachments/assets/30fabcd5-f1da-4670-8069-16823b961de1" />
+
+*Figure 14: Sequence diagram for crash recovery and session restoration*
+
+---
+
+### Scenarios Summary
+
+| Scenario | Trigger | Key Components | Outcome |
+|---|---|---|---|
+| Happy Path | 25-min session completed | TimerController, PointsManager, User | +300 points, Bronze → Silver |
+| Distraction Detection | User switches to Instagram | UsageStatsManager, DistractionEvent | Warning, 75% focus rate |
+| Crash Recovery | App killed by OS | SharedPreferences, SessionRepository | Session restored at 10:00 |
 
 ## 10. Size and Performance
 *(Israa - section in progress)*
