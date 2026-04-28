@@ -1,0 +1,5 @@
+
+local.properties
+thrive_db_device
+thrive_db_device-shm
+thrive_db_device-wal
