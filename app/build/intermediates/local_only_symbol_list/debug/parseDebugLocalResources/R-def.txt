@@ -1,0 +1,24 @@
+R_DEF: Internal format may change without notice
+local
+color black
+color bronze
+color diamond
+color gold
+color platinum
+color purple_200
+color purple_500
+color purple_700
+color silver
+color teal_200
+color teal_700
+color white
+drawable ic_launcher_background
+drawable ic_launcher_foreground
+mipmap ic_launcher
+mipmap ic_launcher_round
+string app_name
+style Theme.AppCompat.DayNight.NoActionBar
+style Theme.Thrive
+style Theme.Thrive.Dark
+xml backup_rules
+xml data_extraction_rules

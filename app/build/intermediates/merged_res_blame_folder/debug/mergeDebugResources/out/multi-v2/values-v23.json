@@ -1,0 +1,19 @@
+{
+    "logs": [
+        {
+            "outputFile": "com.thrive.app-mergeDebugResources-57:/values-v23/values-v23.xml",
+            "map": [
+                {
+                    "source": "C:\\Users\\ag\\.gradle\\caches\\9.3.1\\transforms\\a67bf55d2f34ce7ba79bdf89786e5395\\workspace\\transformed\\work-runtime-2.9.0\\res\\values-v23\\values-v23.xml",
+                    "from": {
+                        "startLines": "2,3",
+                        "startColumns": "4,4",
+                        "startOffsets": "55,121",
+                        "endColumns": "65,62",
+                        "endOffsets": "116,179"
+                    }
+                }
+            ]
+        }
+    ]
+}
