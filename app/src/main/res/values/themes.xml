@@ -1,0 +1,11 @@
+<resources>
+    <style name="Theme.Thrive" parent="android:Theme.Material.Light.NoActionBar">
+        <item name="android:statusBarColor">#FF6200EE</item>
+        <item name="android:windowLightStatusBar">false</item>
+    </style>
+
+    <style name="Theme.Thrive.Dark" parent="android:Theme.Material.NoActionBar">
+        <item name="android:statusBarColor">#FF3700B3</item>
+        <item name="android:windowLightStatusBar">false</item>
+    </style>
+</resources>
