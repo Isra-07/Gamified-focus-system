@@ -28,3 +28,5 @@ Thrive addresses this by:
 ## Architecture Link
 
 [Architecture Documentation](https://github.com/Isra-07/Gamified-focus-system/blob/main/ARCHITECTURE.md)
+
+https://youtu.be/3pQ3J4xYxhk?si=vSdMfXWvNzfdxDpR
