@@ -2,13 +2,6 @@
 
 ## Team Details
 
-| Name | Student ID | GitHub Username |
-|---|---|---|
-| Israa Abouelkheir | 220513506 | isra248 |
-| Mella Mboumba Madeleine | 220513388 | Madeleine20 |
-| Eyis Alay | 220513452 | Eyis-ksa |
-| Fariha Yusuf Salad | 220513800 | fariha67 |
-| Ferdos Jamal Mohamed | 220513674 | Ferdos-J |
 
 ---
 
